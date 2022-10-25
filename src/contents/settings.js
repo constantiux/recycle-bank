@@ -2,17 +2,17 @@ export default [
   {
     name: 'Full name',
     description: 'Change your user name here',
-    to: '',
+    to: 'Home',
   },
   {
     name: 'Email',
     description: 'Change your email address here',
-    to: '',
+    to: 'Home',
   },
   {
     name: 'Password',
     description: 'Change your password here',
-    to: '',
+    to: 'Home',
   },
   {
     name: 'Logout',

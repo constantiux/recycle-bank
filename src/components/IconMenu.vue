@@ -20,7 +20,7 @@ const props = defineProps({
 
 const navigate = () => {
 	setTimeout(() => {
-		router.replace({ name: props.source.to })
+		router.push({ name: props.source.to })
 	}, 300)
 }
 

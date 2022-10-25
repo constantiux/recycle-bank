@@ -8,7 +8,7 @@ input {
 }
 </style>
 
-<template>
+<template v-if="!isAuthenticated">
   <main>
     <section class="mt-16 text-gray-300 text-center w-10/12 mx-auto">
       <h1 class="font-semibold text-lg">Recycle Bank</h1>
@@ -90,6 +90,7 @@ import { useRouter } from 'vue-router';
 //import auth0 from 'auth0-js';
 import { useAuth0 } from '@auth0/auth0-vue';
 const { loginWithRedirect } = useAuth0();
+const { isAuthenticated } = useAuth0();
 
 /*
 const options = {
@@ -108,6 +109,10 @@ const webAuth = new auth0.WebAuth({
 
 const user = useUser();
 const router = useRouter();
+
+if (isAuthenticated) {
+  router.replace({ name: 'Home' });
+}
 
 const form = reactive({
   username: '',
