@@ -17,6 +17,6 @@ export default [
   {
     name: 'Logout',
     description: 'Sign off from this session',
-    to: 'Login',
+    to: 'Logout',
   },
 ];

@@ -26,7 +26,7 @@
     </section>
     <section class="mt-16 text-gray-300">
       <template v-for="(item, x) in settings" :key="x">
-        <List class="active:scale-95 duration-300" @click="handleLogout">
+        <List class="active:scale-95 duration-300" @click="navigate(item.to)">
           <template v-slot:start>
             <span class="text-sm py-2">
               <p class="font-medium text-base">{{ item.name }}</p>

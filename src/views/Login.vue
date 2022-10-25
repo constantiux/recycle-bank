@@ -10,8 +10,18 @@ input {
 
 <template v-if="!isAuthenticated">
   <main>
+    <section class="mt-20">
+      <div class="w-10/12 mx-auto flex flex-col items-center text-gray-300">
+        <img
+          class="rounded-full border-0 border-gray-500"
+          width="150"
+          src="/app-logo.png"
+        />
+      </div>
+    </section>
+
     <section class="mt-16 text-gray-300 text-center w-10/12 mx-auto">
-      <h1 class="font-semibold text-lg">Recycle Bank</h1>
+      <h1 class="font-bold text-lg">Recycle Bank</h1>
       <p class="text-sm">Convert rubbish to cash</p>
     </section>
 
@@ -110,7 +120,9 @@ const webAuth = new auth0.WebAuth({
 const user = useUser();
 const router = useRouter();
 
-if (isAuthenticated) {
+console.log(isAuthenticated._value);
+
+if (isAuthenticated._value) {
   router.replace({ name: 'Home' });
 }
 
