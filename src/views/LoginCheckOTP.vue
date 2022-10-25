@@ -16,25 +16,9 @@ input {
     </section>
 
     <section class="mt-10">
-      <button
-        class="
-          w-full
-          bg-green-500
-          font-semibold
-          text-gray-800
-          py-3
-          rounded-lg
-          mt-6
-        "
-        @click="handleLogin"
-      >
-        Log in
-      </button>
-      <!--
       <form @submit.prevent="login" action="">
-        
         <div class="input-wrapper">
-          <input v-model="form.username" type="text" placeholder="Username" />
+          <input v-model="form.otp" type="text" placeholder="OTP" />
         </div>
 
         <section>
@@ -61,7 +45,6 @@ input {
           }}</small>
         </section>
       </form>
-      -->
     </section>
 
     <section class="mt-24 text-gray-300">
@@ -85,17 +68,15 @@ input {
 import { ref, reactive } from 'vue';
 import { useUser } from '@/stores/user';
 import { useRouter } from 'vue-router';
-//import LoadAction from '@/components/LoadAction.vue';
+import LoadAction from '@/components/LoadAction.vue';
 
-//import auth0 from 'auth0-js';
-import { useAuth0 } from '@auth0/auth0-vue';
-const { loginWithRedirect } = useAuth0();
+import auth0 from 'auth0-js';
+import axios from 'axios';
 
-/*
 const options = {
-  domain: '***.auth0.com',
-  clientID: '***',
-  redirectUri: 'https://***',
+  domain: '0xdev.us.auth0.com',
+  clientID: 'EEPjjpke69kSiWGOVJ5P3j1yMLOL4QGy',
+  redirectUri: 'https://github-eteo45--3000.local.webcontainer.io',
   responseType: 'id_token token',
 };
 
@@ -104,13 +85,13 @@ const webAuth = new auth0.WebAuth({
   responseType: 'id_token token',
 });
 
-*/
+//webAuth.crossOriginVerification();
 
 const user = useUser();
 const router = useRouter();
 
 const form = reactive({
-  username: '',
+  otp: '',
 });
 
 const isLoad = ref(false);
@@ -118,16 +99,6 @@ const isSuccess = ref(false);
 const isFail = ref(false);
 const msgErr = ref('');
 
-const handleLogin = () => {
-  loginWithRedirect({
-    prompt: 'login',
-    appState: {
-      target: '/home',
-    },
-  });
-};
-
-/*
 const login = () => {
   [isLoad.value, isFail.value, isSuccess.value, msgErr.value] = [
     true,
@@ -136,45 +107,55 @@ const login = () => {
     '',
   ];
   setTimeout(() => {
-    if (form.username) {
-      const email = form.username;
-      
+    if (form.otp) {
+      const otp = form.otp;
+      const email = user.username;
 
-      //=====
+      axios
+        .post('https://0xdev.us.auth0.com/oauth/token', {
+          client_id: 'EEPjjpke69kSiWGOVJ5P3j1yMLOL4QGy',
+          username: email,
+          otp: otp,
+          realm: 'email',
+          grant_type: 'http://auth0.com/oauth/grant-type/passwordless/otp',
+        })
+        .then(function (response) {
+          console.log(response);
+          console.log('Redirecting passwordless...');
+          [isLoad.value, isSuccess.value] = [false, true];
+          router.push({ name: 'Home' });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
-      webAuth.passwordlessStart(
+      /*
+      webAuth.passwordlessLogin(
         {
           connection: 'email',
-          send: 'code',
-          email,
+          verificationCode: otp,
+          username: email,
+          onRedirecting: (done) => {
+            console.log('Redirecting passwordless...');
+            [isLoad.value, isSuccess.value] = [false, true];
+            router.push({ name: 'Home' });
+          },
         },
-        (err, result) => {
-          if (err) {
-            [isLoad.value, isFail.value, msgErr.value] = [false, true, 'Wrong email'];
-            return console.error(err);
-          }
-          console.log(result);
-          [isLoad.value, isSuccess.value] = [false, true];
-          user.storeemail(email);
-          router.push({ name: 'LoginOTP' });
+        (err, res) => {
+          if (err) console.error(err);
+          console.log(res);
         }
       );
-      
-      //=====
-
-      loginWithRedirect({
-        prompt: 'login',
-        appState: {
-          target: '/home',
-        },
-      });
+      */
     } else {
-      [isLoad.value, isFail.value, msgErr.value] = [false, true, 'Wrong email'];
+      [isLoad.value, isFail.value, msgErr.value] = [
+        false,
+        true,
+        'Invalid code',
+      ];
     }
   }, 300);
 };
 
 const showPassword = ref(false);
-
-*/
 </script>

@@ -69,7 +69,7 @@ const checkout = () => {
     '',
   ];
   setTimeout(() => {
-    router.push({ name: 'Home' });
+    router.replace({ name: 'Home' });
   }, 300);
 };
 </script>

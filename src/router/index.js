@@ -1,66 +1,85 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
+import {
+  createRouter,
+  createWebHistory,
+  createMemoryHistory,
+} from 'vue-router';
+import Home from '@/views/Home.vue';
 //import { useSession } from '@/stores/session'
 //import { computed } from 'vue'
+import { authGuard } from '@auth0/auth0-vue';
 
 const routes = [
-	{
-		name: 'Home',
-		path: '/home',
-		component: Home
-	},
-	{
-		name: 'Login',
-		path: '/',
-		component: () => import('@/views/Login.vue')
-	},
-	{
-		name: 'Marketplace',
-		path: '/market',
-		component: () => import('@/views/MarketPlace.vue')
-
-	},
-	{
-		name: 'Profile',
-		path: '/profile',
-		component: () => import('@/views/Profile.vue')
-	},
-	{
-		name: 'Deposit',
-		path: '/deposit',
-		component: () => import('@/views/Deposit.vue')
-	},
-	{
-		name: 'Transfer',
-		path: '/transfer',
-		component: () => import('@/views/Transfer.vue')
-	},
-	{
-		name: 'WithDraw',
-		path: '/withdraw',
-		component: () => import('@/views/Withdraw.vue')
-	},
-	{
-		name: 'ChangePoint',
-		path: '/change-point',
-		component: () => import('@/views/ChangePoint.vue')
-	},
-	{
-		name: 'Notifications',
-		path: '/notifications',
-		component: () => import('@/views/Notifications.vue')
-	},
-	{
-		name: 'Carts',
-		path: '/carts',
-		component: () => import('@/views/Carts.vue')
-	}
-]
+  {
+    name: 'Login',
+    path: '/',
+    component: () => import('@/views/Login.vue'),
+  },
+  {
+    name: 'Home',
+    path: '/home',
+    component: Home,
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'Marketplace',
+    path: '/market',
+    component: () => import('@/views/MarketPlace.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'Profile',
+    path: '/profile',
+    component: () => import('@/views/Profile.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'Deposit',
+    path: '/deposit',
+    component: () => import('@/views/Deposit.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'Transfer',
+    path: '/transfer',
+    component: () => import('@/views/Transfer.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'WithDraw',
+    path: '/withdraw',
+    component: () => import('@/views/Withdraw.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'ChangePoint',
+    path: '/change-point',
+    component: () => import('@/views/ChangePoint.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'Notifications',
+    path: '/notifications',
+    component: () => import('@/views/Notifications.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'Carts',
+    path: '/carts',
+    component: () => import('@/views/Carts.vue'),
+    beforeEnter: authGuard,
+  },
+  {
+    name: 'NotFound',
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/views/Login.vue'),
+  },
+];
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
-	routes
-})
+  history: createWebHistory(process.env.BASE_URL),
+  //history: createMemoryHistory(),
+  routes,
+});
 
 /*Nav guard
 const session = useSession()
@@ -70,4 +89,4 @@ router.beforeEach((to, next) => {
 	console.log(isAuthenticated.value)
 }) */
 
-export default router
+export default router;

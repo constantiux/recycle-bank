@@ -16,7 +16,11 @@
   <HeaderBar>
     <template v-slot:start>
       <section class="text-gray-300 flex gap-3 items-center">
-        <i @click="emits('back')" class="fa fa-arrow-left text-lg"></i>
+        <!--<i @click="emits('back')" class="fa fa-arrow-left text-lg"></i>-->
+        <i
+          @click="router.replace({ name: 'Home' })"
+          class="fa fa-arrow-left text-lg"
+        ></i>
         <div>
           <h1 class="text-xl font-semibold">Notifications</h1>
           <p class="text-sm">See all of your pending notifications</p>
@@ -62,6 +66,10 @@
 
 <script setup>
 import HeaderBar from '@/components/HeaderBar.vue';
+import { useRouter } from 'vue-router';
 
+//window.history.forward(1);
+
+const router = useRouter();
 const emits = defineEmits(['back']);
 </script>

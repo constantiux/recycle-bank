@@ -1,5 +1,7 @@
 <div align="center">
-<h3 align="center">Recycle Bank</h3>
+<img src="src/assets/banner.png" alt="screen" width="1200" height="600">
+
+<h2 align="center"><strong>Recycle Bank</strong></h2>
 <p align="center">Convert rubbish to cash</p>
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/constantiux/recycle-bank)
