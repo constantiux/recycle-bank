@@ -30,5 +30,16 @@ import Services from '@/components/Services.vue';
 import Promo from '@/components/Promo.vue';
 import DepositHistory from '@/components/DepositHistory.vue';
 
+import { useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
+const { isAuthenticated } = useAuth0();
+
+console.log(isAuthenticated._value);
+const router = useRouter();
+
+if (!(isAuthenticated._value)) {
+  router.replace({ name: 'Login' });
+}
+
 //window.history.forward(1);
 </script>

@@ -1,13 +1,3 @@
-<style scoped>
-.input-wrapper {
-  @apply w-full h-16 flex items-center mb-3 rounded-lg overflow-hidden gap-2;
-}
-
-input {
-  @apply text-gray-300 active:ring-1 focus:ring-1 ring-green-500 duration-300 rounded-lg w-full bg-secondary h-full px-3 focus:ring-2 active:ring-2 ring-secondary;
-}
-</style>
-
 <template v-if="!isAuthenticated">
   <main>
     <section class="mt-20">
@@ -26,52 +16,7 @@ input {
     </section>
 
     <section class="mt-10">
-      <button
-        class="
-          w-full
-          bg-green-500
-          font-semibold
-          text-gray-800
-          py-3
-          rounded-lg
-          mt-6
-        "
-        @click="handleLogin"
-      >
-        Log in
-      </button>
-      <!--
-      <form @submit.prevent="login" action="">
-        
-        <div class="input-wrapper">
-          <input v-model="form.username" type="text" placeholder="Username" />
-        </div>
-
-        <section>
-          <button
-            class="
-              w-full
-              bg-green-500
-              font-semibold
-              text-gray-800
-              py-3
-              rounded-lg
-              mt-6
-            "
-          >
-            <LoadAction
-              :isLoad="isLoad"
-              :isSuccess="isSuccess"
-              :isFail="isFail"
-              action="LOGIN"
-            />
-          </button>
-          <small class="mt-3 block text-red-600 font-medium">{{
-            msgErr
-          }}</small>
-        </section>
-      </form>
-      -->
+      <LoginButtons />
     </section>
 
     <section class="mt-24 text-gray-300">
@@ -92,106 +37,35 @@ input {
 </template>
 
 <script setup>
+import PageLoader from '@/components/PageLoader.vue';
 import { ref, reactive } from 'vue';
 import { useUser } from '@/stores/user';
-import { useRouter } from 'vue-router';
-//import LoadAction from '@/components/LoadAction.vue';
+import { useRouter, useRoute } from 'vue-router';
+import LoginButtons from '@/components/LoginButtons.vue';
 
-//import auth0 from 'auth0-js';
 import { useAuth0 } from '@auth0/auth0-vue';
 const { loginWithRedirect } = useAuth0();
 const { isAuthenticated } = useAuth0();
 
-/*
-const options = {
-  domain: '***.auth0.com',
-  clientID: '***',
-  redirectUri: 'https://***',
-  responseType: 'id_token token',
-};
-
-const webAuth = new auth0.WebAuth({
-  ...options,
-  responseType: 'id_token token',
-});
-
-*/
-
 const user = useUser();
 const router = useRouter();
+const route = useRoute();
 
 console.log(isAuthenticated._value);
+console.log(route.query);
 
 if (isAuthenticated._value) {
   router.replace({ name: 'Home' });
 }
 
-const form = reactive({
-  username: '',
-});
-
-const isLoad = ref(false);
-const isSuccess = ref(false);
-const isFail = ref(false);
-const msgErr = ref('');
-
-const handleLogin = () => {
-  loginWithRedirect({
-    prompt: 'login',
-    appState: {
-      target: '/home',
-    },
-  });
-};
-
-/*
-const login = () => {
-  [isLoad.value, isFail.value, isSuccess.value, msgErr.value] = [
-    true,
-    false,
-    false,
-    '',
-  ];
-  setTimeout(() => {
-    if (form.username) {
-      const email = form.username;
-      
-
-      //=====
-
-      webAuth.passwordlessStart(
-        {
-          connection: 'email',
-          send: 'code',
-          email,
-        },
-        (err, result) => {
-          if (err) {
-            [isLoad.value, isFail.value, msgErr.value] = [false, true, 'Wrong email'];
-            return console.error(err);
-          }
-          console.log(result);
-          [isLoad.value, isSuccess.value] = [false, true];
-          user.storeemail(email);
-          router.push({ name: 'LoginOTP' });
-        }
-      );
-      
-      //=====
-
-      loginWithRedirect({
-        prompt: 'login',
-        appState: {
-          target: '/home',
-        },
-      });
-    } else {
-      [isLoad.value, isFail.value, msgErr.value] = [false, true, 'Wrong email'];
-    }
-  }, 300);
-};
-
-const showPassword = ref(false);
-
-*/
 </script>
+
+<style scoped>
+.input-wrapper {
+  @apply w-full h-16 flex items-center mb-3 rounded-lg overflow-hidden gap-2;
+}
+
+input {
+  @apply text-gray-300 active:ring-1 focus:ring-1 ring-green-500 duration-300 rounded-lg w-full bg-secondary h-full px-3 focus:ring-2 active:ring-2 ring-secondary;
+}
+</style>

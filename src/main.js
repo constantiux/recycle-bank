@@ -6,11 +6,18 @@ import router from '@/router';
 import '@/styles/index.css';
 import '@/styles/app.css';
 
+import VueMobileDetection from 'vue-mobile-detection'
+import * as Vue from 'vue' // in Vue 3
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 const app = createApp(App);
 
 app
   .use(router)
   .use(createPinia())
+  .use(VueMobileDetection)
+  .use(VueAxios, axios)
   .use(
     createAuth0({
       domain: import.meta.env.VITE_AUTH0_DOMAIN || '0xdev.us.auth0.com',
@@ -19,7 +26,7 @@ app
         'EEPjjpke69kSiWGOVJ5P3j1yMLOL4QGy',
       redirect_uri:
         import.meta.env.VITE_AUTH0_CALLBACK_URL ||
-        'https://github-eteo45--3000.local.webcontainer.io',
+        'http://localhost:3000',
     })
   )
   .mount('#app');

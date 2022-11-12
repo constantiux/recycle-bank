@@ -15,6 +15,11 @@ const routes = [
     component: () => import('@/views/Login.vue'),
   },
   {
+    name: 'IAMSmart',
+    path: '/iams',
+    component: () => import('@/views/IAMSmart.vue'),
+  },
+  {
     name: 'Logout',
     path: '/logout',
     component: () => import('@/views/Logout.vue'),

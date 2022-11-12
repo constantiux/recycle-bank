@@ -74,7 +74,6 @@ import { useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 
 const { user } = useAuth0();
-
 const showFloatingBtn = ref(false);
 const member = useUser();
 const router = useRouter();
