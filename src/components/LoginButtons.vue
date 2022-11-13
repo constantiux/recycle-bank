@@ -85,14 +85,14 @@ console.log(BASE_URL);
 const handleLoginDesktop = () => {
   isLoad.value = true;
   var url =
-    `https://apigw-isit.staging-eid.gov.hk/api/v1/auth/getQR?clientID=2048e738477e48d493bdf7208fb93551&responseType=code&source=App_Scheme&redirectURI=${BASE_URL}/iams&scope=eidapi_auth&lang=en-US&brokerPage=false`;
+    `https://apigw-isit.staging-eid.gov.hk/api/v1/auth/getQR?clientID=2048e738477e48d493bdf7208fb93551&responseType=code&source=PC_Browser&redirectURI=${BASE_URL}/iams&scope=eidapi_auth&lang=en-US&brokerPage=false`;
   window.location.href = url;
 };
 
 const handleLoginMobile = () => {
   isLoad.value = true;
   var url =
-    `https://apigw-isit.staging-eid.gov.hk/api/v1/auth/getQR?clientID=2048e738477e48d493bdf7208fb93551&responseType=code&source=App_Scheme&redirectURI=${BASE_URL}/iams&scope=eidapi_auth&lang=en-US&brokerPage=true`;
+    `https://apigw-isit.staging-eid.gov.hk/api/v1/auth/getQR?clientID=2048e738477e48d493bdf7208fb93551&responseType=code&source=PC_Browser&redirectURI=${BASE_URL}/iams&scope=eidapi_auth&lang=en-US&brokerPage=true`;
   window.location.href = url;
 };
 
