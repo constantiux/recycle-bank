@@ -13,6 +13,15 @@ const app = Fastify({
   logger: true,
 });
 
+app.addHook('onRequest', (request, reply, done) => {
+  // Some code
+  if (!(request.headers.XVALIDATIONCRYPTO === '123')){
+    reply.statusCode = 500;
+    reply.send({ error: true})
+  }
+  done()
+})
+
 app.register(import("../src"));
 
 app.register(require('@fastify/http-proxy'), {
@@ -47,7 +56,5 @@ app.register(require('@fastify/http-proxy'), {
 
 export default async (req, res) => {
   await app.ready();
-  if (req.headers.XVALIDATIONCRYPTO === '123'){
-    app.server.emit("request", req, res);
-  }
+  app.server.emit("request", req, res);
 };
