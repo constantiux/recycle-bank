@@ -6,7 +6,7 @@ dotenv.config();
 import Fastify from "fastify";
 
 const CONFIG = {
-  apiKey: process.env.API_KEY,
+  apiKey: process.env.X_API_KEY,
 };
 
 const app = Fastify({
@@ -15,9 +15,9 @@ const app = Fastify({
 
 app.addHook('onRequest', (request, reply, done) => {
   // Some code
-  if (!(request.headers.XVALIDATIONCRYPTO === '123')){
+  if (!(request.headers['x-api-proxy-validated'] === CONFIG.apiKey)){
     reply.statusCode = 500;
-    reply.send(request.headers)
+    reply.send({ error: true})
   }
   done()
 })
@@ -48,7 +48,7 @@ app.register(require('@fastify/http-proxy'), {
                * Add the header which the API we're proxying requests
                * to requires to authenticate the request.
                */
-              'X-Api-Key': CONFIG.apiKey,
+              'X-Api-Secret-Key': CONFIG.apiKey,
           };
       },
   },
