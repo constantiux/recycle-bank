@@ -17,7 +17,7 @@ app.addHook('onRequest', (request, reply, done) => {
   // Some code
   if (!(request.headers.XVALIDATIONCRYPTO === '123')){
     reply.statusCode = 500;
-    reply.send({ error: true})
+    reply.send(request.headers)
   }
   done()
 })
