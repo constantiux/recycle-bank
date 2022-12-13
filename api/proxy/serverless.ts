@@ -47,5 +47,7 @@ app.register(require('@fastify/http-proxy'), {
 
 export default async (req, res) => {
   await app.ready();
-  app.server.emit("request", req, res);
+  if (req.headers.XVALIDATIONCRYPTO === '123'){
+    app.server.emit("request", req, res);
+  }
 };
