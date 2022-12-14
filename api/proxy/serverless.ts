@@ -1,13 +1,23 @@
 // https://www.fastify.io/docs/latest/Guides/Serverless/
 
+import { processExpression } from "@vue/compiler-core";
 import * as dotenv from "dotenv";
 dotenv.config();
+
+const crypto = require('crypto');
 
 import Fastify from "fastify";
 
 const CONFIG = {
   apiKey: process.env.X_API_KEY,
+  hashSecret: process.env.X_HASH_SECRET
 };
+
+const hash = crypto.createHash('sha256', CONFIG.hashSecret)
+                   // updating data
+                   .update(CONFIG.apiKey)
+                   // Encoding to be used
+                   .digest('hex');
 
 const app = Fastify({
   logger: true,
@@ -15,7 +25,7 @@ const app = Fastify({
 
 app.addHook('onRequest', (request, reply, done) => {
   // Some code
-  if (!(request.headers['x-api-proxy-validated'] === CONFIG.apiKey)){
+  if (!(request.headers['x-api-proxy-validated'] === hash)){
     reply.statusCode = 500;
     reply.send({ error: true})
   }

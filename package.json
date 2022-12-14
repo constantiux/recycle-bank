@@ -10,6 +10,7 @@
   "dependencies": {
     "@auth0/auth0-vue": "^1.0.2",
     "@fastify/http-proxy": "^8.4.0",
+    "@okta/okta-vue": "^5.5.0",
     "@splidejs/vue-splide": "^0.5.18",
     "autoprefixer": "^10.4.2",
     "axios": "^1.1.3",
