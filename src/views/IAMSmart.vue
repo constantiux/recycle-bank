@@ -8,8 +8,6 @@
 import PageLoader from '@/components/PageLoader.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import * as dotenv from "dotenv";
-dotenv.config();
 
 //const { loginWithRedirect } = useAuth0();
 //const { isAuthenticated } = useAuth0();
