@@ -9,8 +9,8 @@ const crypto = require('crypto');
 import Fastify from "fastify";
 
 const CONFIG = {
-  apiKey: process.env.X_API_KEY,
-  hashSecret: process.env.X_HASH_SECRET
+  apiKey: process.env.VITE_X_API_KEY,
+  hashSecret: process.env.VITE_X_HASH_SECRET
 };
 
 const hash = crypto.createHash('sha256', CONFIG.hashSecret)

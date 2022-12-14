@@ -79,7 +79,7 @@ const handleLoginZero = () => {
   });
 };
 
-const BASE_URL = process.env.BASE_URL || 'https://recycle-bank.vercel.app';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 console.log(BASE_URL);
 
 const handleLoginDesktop = () => {

@@ -16,8 +16,8 @@ dotenv.config();
 
 const crypto = require('crypto');
 const CONFIG = {
-  apiKey: process.env.X_API_KEY,
-  hashSecret: process.env.X_HASH_SECRET
+  apiKey: import.meta.env.VITE_X_API_KEY,
+  hashSecret: import.meta.env.VITE_X_HASH_SECRET
 };
 
 const hash = crypto.createHash('sha256', CONFIG.hashSecret)
@@ -55,7 +55,7 @@ else{
       body: JSON.stringify({ code: route.query.code,
                              grantType: "authorization_code" })
     };
-    fetch('https://{0}/api/token'.format(process.env.BASE_URL), requestOptions)
+    fetch('https://{0}/api/token'.format(import.meta.env.VITE_BASE_URL), requestOptions)
       .then(response => response.json())
       .then(data => console.log(data));
   }
