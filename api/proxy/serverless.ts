@@ -12,27 +12,25 @@ const CONFIG = {
   apiKey: process.env.VITE_X_API_KEY
 };
 
-var apiKey: process.env.VITE_X_API_KEY;
-
-const hash = Crypto.createHash('sha256')
+function genHash(timestamp) {
+  const raw = CONFIG.apiKey + timestamp;
+  const hash = Crypto.createHash('sha256')
                    // updating data
-                   .update(CONFIG.apiKey)
+                   .update(raw)
                    // Encoding to be used
                    .digest('hex');
+  return hash
+}
 
 const app = Fastify({
   logger: true,
 });
 
 app.addHook('onRequest', (request, reply, done) => {
-  if (!(request.headers['x-api-proxy-validated'] === hash)){
-    const res = {
-      "headers": request.headers,
-      "hostname": request.hostname,
-
-    }
+  const hashed = genHash(request.headers['x-api-proxy-timestamp'])
+  if (!(request.headers['x-api-proxy-validated'] === hashed)){
     reply.statusCode = 403;
-    reply.send(res)
+    reply.send({ forbidden: true })
   }
   done()
 })

@@ -40,13 +40,16 @@ else{
       },
     });
     */
-    digestMessage(import.meta.env.VITE_X_API_KEY)
+    const timestamp = new Date().getTime().toString();
+    const raw = import.meta.env.VITE_X_API_KEY + timestamp;
+    digestMessage(raw)
     .then((digestHex) => {
     const requestOptions = {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'x-api-proxy-validated': digestHex
+        'x-api-proxy-validated': digestHex,
+        'x-api-proxy-timestamp': timestamp
       },
       body: JSON.stringify({ code: route.query.code,
                              grantType: "authorization_code" })
