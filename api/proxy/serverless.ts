@@ -12,6 +12,8 @@ const CONFIG = {
   apiKey: process.env.VITE_X_API_KEY
 };
 
+var apiKey: process.env.VITE_X_API_KEY;
+
 const hash = Crypto.createHash('sha256')
                    // updating data
                    .update(CONFIG.apiKey)
@@ -25,6 +27,8 @@ const app = Fastify({
 app.addHook('onRequest', (request, reply, done) => {
   // Some code
   if (!(request.headers['x-api-proxy-validated'] === hash)){
+    console.log(request.headers['x-api-proxy-validated']);
+    console.log(hash);
     reply.statusCode = 500;
     reply.send({ error: true})
   }
