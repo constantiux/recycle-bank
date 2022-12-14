@@ -25,12 +25,9 @@ const app = Fastify({
 });
 
 app.addHook('onRequest', (request, reply, done) => {
-  // Some code
   if (!(request.headers['x-api-proxy-validated'] === hash)){
-    console.log(request.headers['x-api-proxy-validated']);
-    console.log(hash);
-    reply.statusCode = 500;
-    reply.send({ error: true})
+    reply.statusCode = 403;
+    reply.send(request.headers)
   }
   done()
 })
