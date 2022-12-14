@@ -4,16 +4,15 @@ import { processExpression } from "@vue/compiler-core";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const crypto = require('crypto');
+import Crypto from 'crypto';
 
 import Fastify from "fastify";
 
 const CONFIG = {
-  apiKey: process.env.VITE_X_API_KEY,
-  hashSecret: process.env.VITE_X_HASH_SECRET
+  apiKey: process.env.VITE_X_API_KEY
 };
 
-const hash = crypto.createHash('sha256', CONFIG.hashSecret)
+const hash = Crypto.createHash('sha256')
                    // updating data
                    .update(CONFIG.apiKey)
                    // Encoding to be used
